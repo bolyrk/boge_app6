@@ -1,15 +1,27 @@
 // 获取元素
 const dateElement = document.getElementById('date');
-const timeElement = document.getElementById('time');
-const secondsElement = document.getElementById('seconds');
 const themeBtn = document.getElementById('themeBtn');
 const fullscreenBtn = document.getElementById('fullscreenBtn');
 const themeSelector = document.getElementById('themeSelector');
 const themeOptions = document.querySelectorAll('.theme-option');
 
+// 获取翻页卡片元素
+const hour1 = document.getElementById('hour1');
+const hour2 = document.getElementById('hour2');
+const minute1 = document.getElementById('minute1');
+const minute2 = document.getElementById('minute2');
+const second1 = document.getElementById('second1');
+const second2 = document.getElementById('second2');
+
 // 初始化主题
 let currentTheme = localStorage.getItem('clockTheme') || 'default';
 document.body.setAttribute('data-theme', currentTheme);
+
+// 更新卡片数字
+function updateFlipCard(element, value) {
+    const digitSpan = element.querySelector('.digit');
+    digitSpan.textContent = value;
+}
 
 // 更新时钟
 function updateClock() {
@@ -27,10 +39,16 @@ function updateClock() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     
-    // 更新显示
+    // 更新日期显示
     dateElement.textContent = `${year}年${month}月${day}日 ${weekday}`;
-    timeElement.textContent = `${hours}:${minutes}`;
-    secondsElement.textContent = seconds;
+    
+    // 更新翻页时钟
+    updateFlipCard(hour1, hours[0]);
+    updateFlipCard(hour2, hours[1]);
+    updateFlipCard(minute1, minutes[0]);
+    updateFlipCard(minute2, minutes[1]);
+    updateFlipCard(second1, seconds[0]);
+    updateFlipCard(second2, seconds[1]);
 }
 
 // 主题切换按钮
